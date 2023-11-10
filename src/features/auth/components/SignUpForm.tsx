@@ -1,11 +1,13 @@
-import { personSchema, PersonType } from '../schemas';
+import { personSignUpSchema, PersonSignUpType } from '../schemas';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FormInput from '../../../components/FormInput';
 import { useSignUpMutation } from '../authApi/authApi';
 
 const SignUpForm = () => {
-  const methods = useForm<PersonType>({ resolver: zodResolver(personSchema) });
+  const methods = useForm<PersonSignUpType>({
+    resolver: zodResolver(personSignUpSchema),
+  });
   const {
     handleSubmit,
     formState: { errors },

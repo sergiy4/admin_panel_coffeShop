@@ -17,7 +17,16 @@ const Router = () => {
       path: '/',
       element: <Layout />,
       errorElement: <ErrorBoundary />,
-      children: [{}],
+      children: [
+        {
+          path: '/login',
+          element: <Login />,
+        },
+        {
+          path: '/signup',
+          element: <SignUp />,
+        },
+      ],
     },
   ]);
   return <RouterProvider router={router} />;

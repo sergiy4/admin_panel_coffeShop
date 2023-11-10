@@ -1,4 +1,4 @@
-import { PersonType } from './schemas';
+import { PersonSignUpType, PersonLoginType } from './schemas';
 import { FieldErrors } from 'react-hook-form';
 
 // SignUp form
@@ -13,7 +13,7 @@ type PersonFieldName =
 
 export interface InputErrorProps {
   name: PersonFieldName;
-  errors: FieldErrors<PersonType>;
+  errors: FieldErrors<PersonSignUpType>;
 }
 
 export interface InputProps extends InputErrorProps {
@@ -29,9 +29,25 @@ export interface SelectProps extends InputProps {
     label: string;
   }[];
 }
+
 export interface ReactSelectProps extends SelectProps {
   isMulti: boolean;
 }
+// Login form
+type PersonLoginFieldName = 'email' | 'password';
+
+export interface LoginInputErrorProps {
+  name: PersonLoginFieldName;
+  errors: FieldErrors<PersonLoginType>;
+}
+
+export interface LoginInputProps extends LoginInputErrorProps {
+  label: string;
+  id: string;
+  type?: 'email' | 'password';
+  placeholder?: string;
+}
+
 // RTK
 export interface User {
   id?: string;

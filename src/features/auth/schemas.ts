@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
-export const personSchema = z.object({
+// schema for signUp
+export const personSignUpSchema = z.object({
   name: z
     .string()
     .min(1, { message: 'Name is required' })
@@ -31,4 +32,22 @@ export const personSchema = z.object({
   role: z.enum(['ADMIN', 'USER', 'MANAGER']).optional(),
 });
 
-export type PersonType = z.infer<typeof personSchema>;
+export type PersonSignUpType = z.infer<typeof personSignUpSchema>;
+
+// schema for login
+
+export const personLoginSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: 'Email is required' })
+    .email({ message: 'Must be a valid email' }),
+  password: z
+    .string()
+    .min(6, { message: 'Password must be atleast 6 characters' })
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).*$/, {
+      message:
+        'Password must contain upper and lower case letters, numbers and special characters',
+    }),
+});
+
+export type PersonLoginType = z.infer<typeof personLoginSchema>;
