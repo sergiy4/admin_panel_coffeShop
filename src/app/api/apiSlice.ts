@@ -34,9 +34,11 @@ const baseQueryWithReAuth: BaseQueryFn<
 > = async (arg, api, extraOptions) => {
   // make a request
   let result = await baseQuery(arg, api, extraOptions);
+  console.log(result);
 
   // if the access token has expired
   if (result?.error?.status === 403) {
+    console.log(result?.error);
     console.log('sending refresh token');
 
     // send a token access update request
@@ -53,6 +55,7 @@ const baseQueryWithReAuth: BaseQueryFn<
       result = await baseQuery(arg, api, extraOptions);
     } else {
       api.dispatch(Logout());
+      // localStorage.setItem('admin_panel_persist', JSON.stringify(false));
     }
   }
   return result;

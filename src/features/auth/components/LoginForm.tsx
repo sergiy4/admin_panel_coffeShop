@@ -6,6 +6,7 @@ import { useLoginMutation } from '../authApi/authApi';
 import { setCredentials } from '../authApi/authSlice';
 import { useDispatch } from 'react-redux';
 import usePersist from '../hooks/usePersist';
+import { useEffect } from 'react';
 
 const LoginForm = () => {
   const [persist, togglePersist] = usePersist();
@@ -20,24 +21,19 @@ const LoginForm = () => {
     formState: { errors },
   } = methods;
 
-  const [login, { isError, error, isSuccess, data }] = useLoginMutation();
+  const [login, {}] = useLoginMutation();
 
-  if (isError) {
-    console.log(error);
-  } else if (isSuccess) {
-    if (data) {
-      dispatch(setCredentials(data));
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      const credentials = await login(data);
+      if ('data' in credentials) {
+        dispatch(setCredentials(credentials.data));
+      }
+
       // TODO: clear form
       // TODO: redirect to main page
-    }
-  }
-  const onSubmit = handleSubmit(async (data) => {
-    await login(data);
+    } catch (err) {}
   });
-
-  const handleToggle = () => {
-    togglePersist();
-  };
 
   return (
     <>
@@ -63,7 +59,12 @@ const LoginForm = () => {
             Login
           </button>
           <label htmlFor="persist">Trust this device?</label>
-          <input type="checkbox" onChange={handleToggle} checked={persist} />
+          <input
+            id="persist"
+            type="checkbox"
+            onChange={togglePersist}
+            checked={persist}
+          />
         </form>
       </FormProvider>
     </>

@@ -1,4 +1,3 @@
-import { Dispatch } from '@reduxjs/toolkit';
 import { useState, useEffect } from 'react';
 
 const usePersist = (): [boolean, () => void] => {

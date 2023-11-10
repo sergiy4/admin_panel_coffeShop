@@ -26,6 +26,10 @@ const Router = () => {
           path: '/signup',
           element: <SignUp />,
         },
+        {
+          path: '/categories',
+          element: <Categories />,
+        },
       ],
     },
   ]);
