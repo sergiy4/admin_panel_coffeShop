@@ -5,8 +5,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useLoginMutation } from '../authApi/authApi';
 import { setCredentials } from '../authApi/authSlice';
 import { useDispatch } from 'react-redux';
+import usePersist from '../hooks/usePersist';
+
 const LoginForm = () => {
+  const [persist, togglePersist] = usePersist();
   const dispatch = useDispatch();
+
   const methods = useForm<PersonLoginType>({
     resolver: zodResolver(personLoginSchema),
   });
@@ -30,6 +34,11 @@ const LoginForm = () => {
   const onSubmit = handleSubmit(async (data) => {
     await login(data);
   });
+
+  const handleToggle = () => {
+    togglePersist();
+  };
+
   return (
     <>
       <FormProvider {...methods}>
@@ -53,6 +62,8 @@ const LoginForm = () => {
           <button className="btn login_btn" onClick={onSubmit}>
             Login
           </button>
+          <label htmlFor="persist">Trust this device?</label>
+          <input type="checkbox" onChange={handleToggle} checked={persist} />
         </form>
       </FormProvider>
     </>
