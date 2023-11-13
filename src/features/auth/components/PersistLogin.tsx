@@ -26,10 +26,7 @@ const PersistLogin = () => {
       }
     };
 
-    if (!token && persist) {
-      console.log(token);
-      verifyRefreshToken();
-    }
+    if (!token && persist) verifyRefreshToken();
   }, []);
 
   let content;

@@ -13,7 +13,13 @@ const LogoutButton = () => {
   return (
     <>
       {/* TODO: add logout icon */}
-      <button onClick={logout}>Logout</button>
+      <button
+        onClick={() => {
+          logout();
+        }}
+      >
+        Logout
+      </button>
     </>
   );
 };
