@@ -25,10 +25,6 @@ const Router = () => {
       children: [
         // public routes
         {
-          index: true,
-          element: <Main />,
-        },
-        {
           path: '/login',
           element: <Login />,
         },

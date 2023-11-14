@@ -1,7 +1,6 @@
 import { useSendLogoutMutation } from '../authApi/authApi';
 
 const LogoutButton = () => {
-  //
   const [logout, { isError, error, isSuccess }] = useSendLogoutMutation();
 
   if (isError) {

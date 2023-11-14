@@ -6,7 +6,6 @@ import { useLoginMutation } from '../authApi/authApi';
 import { setCredentials } from '../authApi/authSlice';
 import { useDispatch } from 'react-redux';
 import usePersist from '../hooks/usePersist';
-import { useEffect } from 'react';
 
 const LoginForm = () => {
   const [persist, togglePersist] = usePersist();
@@ -32,7 +31,9 @@ const LoginForm = () => {
 
       // TODO: clear form
       // TODO: redirect to main page
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   });
 
   return (
@@ -55,9 +56,7 @@ const LoginForm = () => {
             name="password"
             errors={errors}
           />
-          <button className="btn login_btn" onClick={onSubmit}>
-            Login
-          </button>
+          <button onClick={onSubmit}>Login</button>
           <label htmlFor="persist">Trust this device?</label>
           <input
             id="persist"

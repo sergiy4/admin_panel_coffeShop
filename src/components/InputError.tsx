@@ -1,4 +1,4 @@
-import { InputErrorProps } from '../features/auth/types';
+import { InputErrorProps } from '../types';
 import { ErrorMessage } from '@hookform/error-message';
 
 const InputError = ({ errors, name }: InputErrorProps) => {

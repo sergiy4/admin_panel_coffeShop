@@ -4,7 +4,8 @@ import { useRefreshMutation } from '../authApi/authApi';
 import usePersist from '../hooks/usePersist';
 import { useSelector } from 'react-redux';
 import { SelectToken } from '../authApi/authSlice';
-import { isCustomErrorType } from '../utils/helpers';
+import { isCustomErrorType } from '../../../utils/helpers';
+import getQueryErrorMessage from '../../../utils/getQueryErrorMessage';
 
 const PersistLogin = () => {
   const [persist] = usePersist();
@@ -43,23 +44,15 @@ const PersistLogin = () => {
   } else if (isError) {
     // persist: yes
     // token: no
-    console.log(error);
 
-    if (isCustomErrorType(error)) {
-      content = (
-        <p>
-          {error?.data?.message}
-          <Link to="/login"> Pleas login again</Link>
-        </p>
-      );
-    } else {
-      content = (
-        <p>
-          Some error
-          <Link to="/login">Pleas login again</Link>
-        </p>
-      );
-    }
+    const errorMessage = getQueryErrorMessage(error);
+
+    content = (
+      <>
+        <p>{errorMessage}</p>
+        <Link to="/login"> Pleas login again</Link>
+      </>
+    );
   } else if (isSuccess && trueSuccess) {
     console.log('Success');
     // persist: yes

@@ -3,7 +3,7 @@ import { Category, QueryMessageResponse } from '../types';
 
 const categorySlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllCategories: builder.query<Category[], unknown>({
+    getAllCategories: builder.query<Category[], void>({
       query: () => ({
         url: 'categories',
         method: 'GET',
@@ -23,9 +23,9 @@ const categorySlice = apiSlice.injectEndpoints({
     }),
 
     updateCategory: builder.mutation<Category, Category>({
-      query: ({ name, id }) => ({
-        url: `categories/${id}`,
-        method: 'POST',
+      query: ({ name, _id }) => ({
+        url: `categories/${_id}`,
+        method: 'PATCH',
         body: {
           name,
         },
@@ -33,9 +33,9 @@ const categorySlice = apiSlice.injectEndpoints({
       invalidatesTags: ['Category'],
     }),
 
-    deleteCategory: builder.mutation<QueryMessageResponse, string>({
-      query: (id) => ({
-        url: `categories/${id}`,
+    deleteCategory: builder.mutation<unknown, string>({
+      query: (_id) => ({
+        url: `categories/${_id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Category'],

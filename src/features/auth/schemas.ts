@@ -13,10 +13,12 @@ export const personSignUpSchema = z.object({
   email: z
     .string()
     .min(1, { message: 'Email is required' })
+    .max(100, { message: 'Email must contain max 100 characters' })
     .email({ message: 'Must be a valid email' }),
   password: z
     .string()
     .min(6, { message: 'Password must be atleast 6 characters' })
+    .max(100, { message: 'Password must contain max 100 characters' })
     .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).*$/, {
       message:
         'Password must contain upper and lower case letters, numbers and special characters',
@@ -40,10 +42,12 @@ export const personLoginSchema = z.object({
   email: z
     .string()
     .min(1, { message: 'Email is required' })
+    .max(100, { message: 'Email must contain max 100 characters' })
     .email({ message: 'Must be a valid email' }),
   password: z
     .string()
     .min(6, { message: 'Password must be atleast 6 characters' })
+    .max(100, { message: 'Password must contain max 100 characters' })
     .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).*$/, {
       message:
         'Password must contain upper and lower case letters, numbers and special characters',
