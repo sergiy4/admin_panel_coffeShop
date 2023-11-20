@@ -1,24 +1,25 @@
 import { usePagination, usePaginationArgs } from '../hooks/usePagination';
 import PaginationButton from './PaginationButton';
+import { useSearchParams } from 'react-router-dom';
 
 interface PaginationProps extends usePaginationArgs {
-  path: string;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const Pagination = ({
   currentPage,
   siblingCount = 1,
   totalPageCount,
-  path,
+  setPage,
 }: PaginationProps) => {
-  console.log('hesre');
   const paginationRange = usePagination({
     currentPage,
     siblingCount,
     totalPageCount,
   });
-
   console.log(paginationRange);
+  const [searchParams, setSearchParams] = useSearchParams();
+
   if (!paginationRange) {
     return null;
   }
@@ -32,13 +33,15 @@ const Pagination = ({
         {paginationRange.map((page) => {
           if (typeof page === 'string') {
             return <div key={page}>...</div>;
+            //
           }
 
           return (
             <PaginationButton
-              label={page}
-              path={`${path}?page=${page}`}
+              page={page}
               key={page}
+              setPage={setPage}
+              setSearchParams={setSearchParams}
             />
           );
         })}

@@ -50,6 +50,7 @@ const Router = () => {
             </RequireAuth>
           ),
         },
+
         {
           path: '/products/:productID',
           element: (

@@ -7,6 +7,8 @@ interface Product {
   images: string[];
   description: string;
   availableQuantity: number;
+  rating: number;
+  quantityReview: number;
 }
 
 interface GetProductsQueryArg {
@@ -18,7 +20,21 @@ interface GetProductsQueryArg {
 
 interface ProductQueryResult {
   products: Product[];
-  numberOfPages: number;
+  totalPageCount: number;
 }
 
-export type { Product, GetProductsQueryArg, ProductQueryResult };
+interface ProductCreateArg {
+  name: string;
+  category: string;
+  price: number;
+  images: FileList;
+  description: string;
+  availableQuantity: number;
+}
+
+export type {
+  Product,
+  GetProductsQueryArg,
+  ProductQueryResult,
+  ProductCreateArg,
+};

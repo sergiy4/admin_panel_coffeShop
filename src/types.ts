@@ -7,8 +7,8 @@ export interface InputErrorProps {
 
 export interface InputProps extends InputErrorProps {
   label: string;
-  id: string;
-  type?: 'text' | 'email' | 'password';
+  id?: string;
+  type?: 'text' | 'email' | 'password' | 'file' | 'number';
   placeholder?: string;
   defaultValue?: string;
 }

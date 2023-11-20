@@ -4,34 +4,42 @@ import {
   createEntityAdapter,
   // createSelector,
 } from '@reduxjs/toolkit';
-import { Product, GetProductsQueryArg, ProductQueryResult } from '../types';
+import {
+  Product,
+  GetProductsQueryArg,
+  ProductQueryResult,
+  ProductCreateArg,
+} from '../types';
 
-const productAdapter = createEntityAdapter<Product>({
-  sortComparer: (a, b) => a.name.localeCompare(b.name),
-});
+// const productAdapter = createEntityAdapter<Product>({
+//   sortComparer: (a, b) => a.name.localeCompare(b.name),
+// });
 
-const initialState = productAdapter.getInitialState();
+// const initialState = productAdapter.getInitialState();
 
 export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getProducts: builder.query<EntityState<Product>, GetProductsQueryArg>({
+    // EntityState<Product>
+    getProducts: builder.query<ProductQueryResult, GetProductsQueryArg>({
       query: ({ page, pageSize, category, search }) => ({
         url: '/products',
         method: 'GET',
         params: { page, pageSize, category, search },
       }),
-      transformResponse: (result: ProductQueryResult): EntityState<Product> => {
-        const loadedProducts = result?.products?.map((product) => {
-          product.id = product._id;
-          return product;
-        });
-        return productAdapter.setAll(initialState, loadedProducts);
-      },
+      // transformResponse: (result: ProductQueryResult): EntityState<Product> => {
+      //   const loadedProducts = result?.products?.map((product) => {
+      //     product.id = product._id;
+      //     return product;
+      //   });
+
+      //   return productAdapter.setAll(initialState, loadedProducts);
+      // },
+
       providesTags: (result) => {
         if (result) {
           return [
             { type: 'Product', id: 'LIST' },
-            ...result.ids.map((id) => ({ type: 'Product' as const, id })),
+            ...result.products.map((product) => ({ type: 'Product' as const, id: product._id })),
           ];
         } else return [{ type: 'Product', id: 'LIST' }];
       },
@@ -55,13 +63,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ['Product'],
     }),
 
-    deleteProduct: builder.mutation<
-      { id: string },
-      { data: { message: string } }
-    >({
+    deleteProduct: builder.mutation<  { data: { message: string } } , string >({
       query: (id) => ({
         url: `/products/${id}`,
-        method: 'POST',
+        method: 'DELETE',
       }),
       invalidatesTags: ['Product'],
     }),

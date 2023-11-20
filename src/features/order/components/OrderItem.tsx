@@ -23,6 +23,3 @@ const OrderItem = ({ bill, orderItems, userID, _id }: Order) => {
   return <>{productItems}</>;
 };
 export default OrderItem;
-{
-  /* <td rowSpan={rowCount}>BILL</td> */
-}

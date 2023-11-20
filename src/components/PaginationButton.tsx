@@ -1,12 +1,24 @@
-import { useNavigate } from 'react-router-dom';
+import { SetURLSearchParams } from 'react-router-dom';
+import { addUrlParameter } from '../utils/addUrlParameter';
 
 interface PaginationButtonProps {
-  label: string | number;
-  path: string;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  setSearchParams: SetURLSearchParams;
 }
-const PaginationButton = ({ label, path }: PaginationButtonProps) => {
-  const navigation = useNavigate();
-  return <button onClick={() => navigation(path)}>{label}</button>;
+const PaginationButton = ({
+  page,
+  setPage,
+  setSearchParams,
+}: PaginationButtonProps) => {
+  const setCurrentPage = () => {
+    const urlWithPageParameter = addUrlParameter('page', page.toString(10));
+
+    setSearchParams(urlWithPageParameter);
+    setPage(page);
+  };
+
+  return <button onClick={() => setCurrentPage()}>{page}</button>;
 };
 
 export default PaginationButton;

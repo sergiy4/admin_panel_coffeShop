@@ -34,10 +34,10 @@ const PersistLogin = () => {
 
   if (!persist) {
     // persist: no
-    console.log('persist: no');
+    // console.log('persist: no');
     content = <Outlet />;
   } else if (isLoading) {
-    console.log('isLoading');
+    // console.log('isLoading');
     // persist: yes
     // token: no
     content = <p>Loading...</p>;
@@ -54,12 +54,12 @@ const PersistLogin = () => {
       </>
     );
   } else if (isSuccess && trueSuccess) {
-    console.log('Success');
+    // console.log('Success');
     // persist: yes
     // token: yes
     content = <Outlet />;
   } else if (token && isUninitialized) {
-    console.log('token and un');
+    // console.log('token and un');
     // persist: yes
     // token: no
     content = <Outlet />;

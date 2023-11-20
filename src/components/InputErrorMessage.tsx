@@ -1,7 +1,7 @@
 import { InputErrorProps } from '../types';
 import { ErrorMessage } from '@hookform/error-message';
 
-const InputError = ({ errors, name }: InputErrorProps) => {
+const InputErrorMessage = ({ errors, name }: InputErrorProps) => {
   return (
     <ErrorMessage
       errors={errors}
@@ -11,4 +11,4 @@ const InputError = ({ errors, name }: InputErrorProps) => {
   );
 };
 
-export default InputError;
+export default InputErrorMessage;

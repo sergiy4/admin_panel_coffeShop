@@ -1,10 +1,8 @@
-import { getUrlPageNumber } from '../../../utils/getUrlPageNumber';
 import { useGetOrdersQuery } from '../orderApi/orderApi';
 import getQueryErrorMessage from '../../../utils/getQueryErrorMessage';
 import Loader from '../../../components/Loader';
 import OrderItem from './OrderItem';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Pagination from '../../../components/Pagination';
 
 const OrderList = () => {
@@ -12,8 +10,7 @@ const OrderList = () => {
   let loader;
   let content;
   let pagination;
-  const page = getUrlPageNumber();
-  const navigate = useNavigate();
+  const [page, setPage] = useState<number>(0);
 
   const { data, isSuccess, isError, error, isFetching, isLoading } =
     useGetOrdersQuery({ page });
@@ -21,6 +18,7 @@ const OrderList = () => {
   if (isLoading || isFetching) {
     loader = <Loader />;
   } else if (isSuccess) {
+    console.log(data);
     content = data?.orders?.map((order) => (
       <OrderItem {...order} key={order._id} />
     ));
@@ -29,7 +27,7 @@ const OrderList = () => {
       <Pagination
         siblingCount={1}
         currentPage={page}
-        path="/orders"
+        setPage={setPage}
         totalPageCount={data.totalPageCount}
       />
     );
@@ -40,13 +38,14 @@ const OrderList = () => {
     if (isError) {
       errorMessage = getQueryErrorMessage(error);
       // If error navigate to page one
-      navigate('/orders?page=1');
+      setPage(1);
     }
   }, [isError]);
 
   return (
     <>
       {loader}
+      {errorMessage ? <p>{errorMessage}</p> : null}
       <table>
         <thead>
           <tr>

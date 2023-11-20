@@ -12,6 +12,8 @@ export const usePagination = ({
 }: usePaginationArgs) => {
   const paginationRange = useMemo(() => {
     const DOTS = '...';
+    const LEFT_DOTS = 'LEFT_DOTS';
+    const RIGHT_DOTS = 'RIGHT_DOTS';
     // Case 1:
     //   If the number of pages is less than the page numbers we want to show in our
     //   paginationComponent
@@ -36,7 +38,7 @@ export const usePagination = ({
       let leftItemCount = 3 + 2 * siblingCount;
       let leftRange = range(1, leftItemCount);
 
-      return [...leftRange, DOTS, totalPageCount];
+      return [...leftRange, RIGHT_DOTS, totalPageCount];
     }
 
     // 	Case 3: No right dots to show, but left dots to be shown
@@ -47,13 +49,19 @@ export const usePagination = ({
         totalPageCount
       );
 
-      return [firstPageIndex, DOTS, ...rightRange];
+      return [firstPageIndex, LEFT_DOTS, ...rightRange];
     }
 
     // Case 4: Both left and right dots to be shown
     if (shouldShowLeftDots && shouldShowRightDots) {
       let middleRange = range(leftSiblingIndex, rightSiblingIndex);
-      return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
+      return [
+        firstPageIndex,
+        LEFT_DOTS,
+        ...middleRange,
+        RIGHT_DOTS,
+        lastPageIndex,
+      ];
     }
   }, [totalPageCount, siblingCount, currentPage]);
 
