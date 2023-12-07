@@ -20,7 +20,7 @@ const Pagination = ({
   if (!paginationRange) {
     return null;
   }
-  if (currentPage === 0 && paginationRange?.length < 2) {
+  if (currentPage === 1 && paginationRange?.length < 2) {
     return null;
   }
 

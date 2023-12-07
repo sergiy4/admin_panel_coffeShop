@@ -1,6 +1,6 @@
 export interface Review {
-  id?: string;
-  rating: 1 | 2 | 3 | 4 | 5;
+  _id?: string;
+  rating: number;
   comment: string;
   name: string;
   email: string;
@@ -12,5 +12,10 @@ export interface GetReviewsQueryArg {
   productID: string;
   page?: number;
   pageSize?: number;
-  rating?: 1 | -1;
+  rating?: string;
 }
+
+export type GetReviewsResult = {
+  reviews: Review[];
+  totalPageCount: number;
+};

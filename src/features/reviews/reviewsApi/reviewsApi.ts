@@ -1,9 +1,9 @@
 import { apiSlice } from '../../../app/api/apiSlice';
-import { Review, GetReviewsQueryArg } from '../types';
+import { Review, GetReviewsQueryArg, GetReviewsResult } from '../types';
 
 export const reviewsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getReviewsSomeProduct: builder.query<Review[], GetReviewsQueryArg>({
+    getProductsReviews: builder.query<GetReviewsResult, GetReviewsQueryArg>({
       query: ({ productID, page, pageSize, rating }) => ({
         url: `/products/${productID}/reviews`,
         method: 'GET',
@@ -22,5 +22,5 @@ export const reviewsApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetReviewsSomeProductQuery, useDeleteReviewMutation } =
+export const { useGetProductsReviewsQuery, useDeleteReviewMutation } =
   reviewsApi;

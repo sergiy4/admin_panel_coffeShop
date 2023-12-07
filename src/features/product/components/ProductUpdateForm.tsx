@@ -5,10 +5,13 @@ import ReactSelectInput from '../../../components/ReactSelectInput';
 import NumberInput from '../../../components/NumberInput';
 import FileInput from '../../../components/FileInput';
 import { useUpdateProductMutation } from '../productApi/productApi';
-import getQueryErrorMessage from '../../../utils/getQueryErrorMessage';
+import getQueryErrorMessage, {
+  QueryError,
+} from '../../../utils/getQueryErrorMessage';
 import FormInput from '../../../components/FormInput';
 import { Product } from '../types';
 import { useLocation, useParams } from 'react-router-dom';
+import useToastMessages from '../../../hooks/useToastMessage';
 
 type UpdateFormProps = {
   categoryOptions: {
@@ -18,8 +21,7 @@ type UpdateFormProps = {
 };
 
 const UpdateForm = ({ categoryOptions }: UpdateFormProps) => {
-  let errorMessage;
-  let successMessage;
+  const [notifySuccess, notifyError] = useToastMessages();
   const { state } = useLocation() as unknown as { state: Product };
   const { productID } = useParams();
 
@@ -31,8 +33,7 @@ const UpdateForm = ({ categoryOptions }: UpdateFormProps) => {
     formState: { errors },
   } = methods;
 
-  const [update, { isError, error, isSuccess, isLoading }] =
-    useUpdateProductMutation();
+  const [update, { isLoading }] = useUpdateProductMutation();
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -50,16 +51,15 @@ const UpdateForm = ({ categoryOptions }: UpdateFormProps) => {
       }
 
       console.log(formData.get('id'));
-      await update(formData);
-    } catch (err) {}
+      await update(formData).unwrap();
+      notifySuccess('Product has been updated successfully');
+    } catch (err) {
+      let errorMessage = getQueryErrorMessage(err as QueryError);
+      notifyError(errorMessage);
+      console.log(err);
+    }
   });
 
-  if (isLoading) {
-  } else if (isError) {
-    errorMessage = getQueryErrorMessage(error);
-  } else if (isSuccess) {
-    successMessage = 'Product has been updated successfully';
-  }
   return (
     <>
       <FormProvider {...methods}>
@@ -114,8 +114,6 @@ const UpdateForm = ({ categoryOptions }: UpdateFormProps) => {
           </button>
         </form>
       </FormProvider>
-      <div>{errorMessage ? <p>{errorMessage}</p> : null}</div>
-      <div>{successMessage ? <p>{successMessage}</p> : null}</div>
     </>
   );
 };

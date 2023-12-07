@@ -12,20 +12,20 @@ export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // EntityState<Product>
     getProducts: builder.query<ProductQueryResult, GetProductsQueryArg>({
-      query: ({ page, pageSize, category, search }) => ({
+      query: ({ page, pageSize, category, search, rating }) => ({
         url: '/products',
         method: 'GET',
-        params: { page, pageSize, category, search },
+        params: { page, pageSize, category, search, rating },
       }),
-      // providesTags: (result) => {
-      //   if (result) {
-      //     return [
-      //       { type: 'Product', id: 'LIST' },
-      //       ...result.products.map((product) => ({ type: 'Product' as const, id: product._id })),
-      //     ];
-      //   } else return [{ type: 'Product', id: 'LIST' }];
-      // },
-      providesTags:['Product']
+      providesTags: (result) => {
+        if (result) {
+          return [
+            { type: 'Product', id: 'LIST' },
+            ...result.products.map((product) => ({ type: 'Product' as const, id: product._id })),
+          ];
+        } else return [{ type: 'Product', id: 'LIST' }];
+      },
+      // providesTags:['Product']
     }),
 
     createProduct: builder.mutation<Product, FormData>({

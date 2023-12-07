@@ -1,5 +1,5 @@
 import { Controller, useFormContext } from 'react-hook-form';
-import { ReactSelectProps, SelectProps } from '../types';
+import { SelectProps } from '../types';
 import ReactSelect from 'react-select';
 import InputErrorMessage from './InputErrorMessage';
 

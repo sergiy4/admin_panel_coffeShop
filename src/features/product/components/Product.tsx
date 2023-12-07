@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Loader from '../../../components/Loader';
 import getQueryErrorMessage from '../../../utils/getQueryErrorMessage';
 import { useNavigate } from 'react-router-dom';
+import ProductDetails from './ProductDetails';
 
 const Product = () => {
   let content;
@@ -53,7 +54,7 @@ const Product = () => {
     <section>
       <section>{updateButton}</section>
       <section>{content}</section>
-      <section>{}</section>
+      <ProductDetails />
     </section>
   );
 };
