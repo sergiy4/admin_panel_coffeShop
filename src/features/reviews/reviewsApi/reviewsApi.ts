@@ -1,5 +1,10 @@
 import { apiSlice } from '../../../app/api/apiSlice';
-import { Review, GetReviewsQueryArg, GetReviewsResult } from '../types';
+import {
+  Review,
+  GetReviewsQueryArg,
+  GetReviewsResult,
+  DeleteQueryArg,
+} from '../types';
 
 export const reviewsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -12,9 +17,9 @@ export const reviewsApi = apiSlice.injectEndpoints({
       providesTags: ['Review'],
     }),
 
-    deleteReview: builder.mutation({
+    deleteReview: builder.mutation<{ message: string }, DeleteQueryArg>({
       query: ({ productID, reviewID }) => ({
-        url: `/products/${productID}/reviews${reviewID}`,
+        url: `/products/${productID}/reviews/${reviewID}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Review'],
